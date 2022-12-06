@@ -3,6 +3,13 @@
 {% block title %}Commissions{% endblock %}
 
 {% block main %}
+{% with messages = get_flashed_messages() %}
+{% if messages %}
+    {% for message in messages %}
+        <p>{{message}}</p>
+    {% endfor %}
+{% endif %}
+{% endwith %}
 <div class="container">
     <h1 class="mb-5">Commissions</h1>
     <p>Si vous voulez commander mes services, c'est ici, sinon je suis toujours disponible sur <a href="https://www.instagram.com/jekwed/?hl=fr">Instagram</a> si vous voulez</p>

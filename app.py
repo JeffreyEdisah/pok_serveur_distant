@@ -1,11 +1,9 @@
-import os
-from flask import Flask, render_template, request, redirect, url_for;
-from flask_migrate import Migrate
-from flask_sqlalchemy import SQLAlchemy
+from flask import Flask, render_template, request, redirect, url_for, session
+from datetime import timedelta
 
 app = Flask(__name__)
-app.config.from_object('config')
-db = SQLAlchemy(app)
+app.secret_key = 
+app.permanent_session_lifetime = timedelta (minutes=60)
 
 @app.route("/")
 def about():
@@ -13,13 +11,16 @@ def about():
 
 @app.route("/commissions",methods=["POST","GET"])
 def commissions():
-    return render_template("commissions.html")
-
-
-@app.route("/commissions_sent",methods=["POST","GET"])
-def send_commissions():
-    mail = request.form.get("mail")
-    commissions = request.form.get("commissions")
-    if commissions == "":
+    if request.method == "POST" and "commissions" not in session:
+        session.permanent = True
+        mail = request.form.get("mail")
+        session["mail"] = mail
+        commissions = request.form.get("commissions")
+        session["commissions"] = commissions
+        if commissions == "":
+            flash("Entrez une commission valide")
+            return redirect(url_for('commissions'))
         return redirect(url_for('commissions'))
-    return redirect(url_for('commissions'))
+    else :
+        return render_template("commissions.html")
+

@@ -3,17 +3,19 @@
 {% block title %}Commissions{% endblock %}
 
 {% block main %}
-{% with messages = get_flashed_messages() %}
-{% if messages %}
-    {% for message in messages %}
-        <p>{{message}}</p>
-    {% endfor %}
-{% endif %}
-{% endwith %}
 <div class="container">
     <h1 class="mb-5">Commissions</h1>
+
+    {% with messages = get_flashed_messages() %}
+    {% if messages %}
+        {% for message in messages %}
+            <p class="mt-2 mb-3">{{message}}</p>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
     <p>Si vous voulez commander mes services, c'est ici, sinon je suis toujours disponible sur <a href="https://www.instagram.com/jekwed/?hl=fr">Instagram</a> si vous voulez</p>
-    <form action="/commissions_sent" method="post">
+    <form action="/commissions" method="post">
         <div class="mb-3">
             <label for="mail" class="form-label">Mail</label>
             <input type="email" autofocus="on" class="form-control" id="mail" name="mail" placeholder="nom@exemple.com">
